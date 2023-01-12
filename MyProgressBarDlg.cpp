@@ -85,7 +85,7 @@ void CMyProgressBarDlg::OnPaint()
 		dc.FillSolidRect(pos, 0, 200, 30, RGB(0, 80, 160));
 		dc.FillSolidRect(0, 0, pos, 30, RGB(0, 160, 255));
 
-		pos = m_my_progress.GetPos() * (m_user_rect.Width() / 100);
+		pos = m_my_progress.GetPos() * m_user_rect.Width() / 100;
 
 		dc.FillSolidRect(m_user_rect.left + pos, m_user_rect.top, 
 			m_user_rect.Width(), m_user_rect.Height(), RGB(0, 80, 160));
@@ -114,7 +114,7 @@ void CMyProgressBarDlg::OnTimer(UINT_PTR nIDEvent)
 		m_my_progress.SetPos((pos + 1) % 101);
 
 		InvalidateRect(CRect(0, 0, 200, 30), FALSE);
-		InvalidateRect(m_user_rect, 0);
+		InvalidateRect(m_user_rect, 1);
 	}
 	else
 	{
