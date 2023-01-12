@@ -47,10 +47,9 @@ BOOL CMyProgressBarDlg::OnInitDialog()
 	//  프레임워크가 이 작업을 자동으로 수행합니다.
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
-
-	GetDlgItem(IDC_USER_RECT)->GetWindowRect(m_user_rect); // Picture Control의 좌표
-	ScreenToClient(m_user_rect);	// 캡션 크기만큼 보정
-
+	
+	m_user_progress.Create(this, IDC_USER_RECT);
+	m_user_progress.SetColor(RGB(160, 50, 0), RGB(255, 200, 0));
 	SetTimer(1, 50, NULL); // WM_TIMER Message 발생
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
@@ -80,19 +79,7 @@ void CMyProgressBarDlg::OnPaint()
 	}
 	else
 	{
-		int pos = m_my_progress.GetPos() * (200 / 100);
-
-		dc.FillSolidRect(pos, 0, 200, 30, RGB(0, 80, 160));
-		dc.FillSolidRect(0, 0, pos, 30, RGB(0, 160, 255));
-
-		pos = m_my_progress.GetPos() * m_user_rect.Width() / 100;
-
-		dc.FillSolidRect(m_user_rect.left + pos, m_user_rect.top, 
-			m_user_rect.Width(), m_user_rect.Height(), RGB(0, 80, 160));
-		dc.FillSolidRect(m_user_rect.left, m_user_rect.top,
-			pos, m_user_rect.Height(), RGB(0, 160, 255));
-		
-		// CDialogEx::OnPaint();
+		m_user_progress.Draw(&dc);
 	}
 }
 
@@ -110,11 +97,12 @@ void CMyProgressBarDlg::OnTimer(UINT_PTR nIDEvent)
 	if (nIDEvent == 1)
 	{
 		int pos = m_my_progress.GetPos();
-		// pos = (pos + 1) % 101;
-		m_my_progress.SetPos((pos + 1) % 101);
-
-		InvalidateRect(CRect(0, 0, 200, 30), FALSE);
-		InvalidateRect(m_user_rect, 1);
+		pos = (pos + 1) % 101;
+		m_my_progress.SetPos(pos);
+		
+		m_user_progress.SetPos(pos);
+		
+		m_user_progress.Update(this, pos);
 	}
 	else
 	{
