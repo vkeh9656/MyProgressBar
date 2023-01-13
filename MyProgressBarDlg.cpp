@@ -48,8 +48,11 @@ BOOL CMyProgressBarDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 	
-	m_user_progress.Create(this, IDC_USER_RECT);
+	m_user_progress.Create(this, IDC_USER_RECT1);
 	m_user_progress.SetColor(RGB(160, 50, 0), RGB(255, 200, 0));
+
+	m_test_progress.CreateProgress(this, IDC_USER_RECT2, 25001);
+	
 	SetTimer(1, 50, NULL); // WM_TIMER Message 발생
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
@@ -103,6 +106,7 @@ void CMyProgressBarDlg::OnTimer(UINT_PTR nIDEvent)
 		m_user_progress.SetPos(pos);
 		
 		m_user_progress.Update(this, pos);
+		m_test_progress.UpdatePos(pos);
 	}
 	else
 	{

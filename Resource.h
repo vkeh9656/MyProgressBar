@@ -6,6 +6,8 @@
 #define IDR_MAINFRAME                   128
 #define IDC_MY_PROGRESS                 1000
 #define IDC_USER_RECT                   1001
+#define IDC_USER_RECT1                  1001
+#define IDC_USER_RECT2                  1002
 
 // Next default values for new objects
 // 
