@@ -95,6 +95,7 @@ private:
 	CBitmap m_mem_bmp;
 	int m_width, m_height;
 
+public:
 	SJ_MemDC()
 	{
 		m_width = m_height = 0;
